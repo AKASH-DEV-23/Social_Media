@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/auth/login/LoginPage";
 import SignUpPage from "./pages/auth/signup/SignUpPage";
@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function App() {
+  const location = useLocation();
   const { data: authUser, isLoading } = useQuery({
     // we use queryKey to give a unique name to our query and refer to it later
     queryKey: ["authUser"],
@@ -41,13 +42,14 @@ function App() {
       </div>
     )
   }
+  const isPanel = location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <div className="flex max-w-6xl mx-auto">
 
       {/* Common component, bc it's not wrapped with routes */}
 
-      <Sidebar />
+      {!isPanel && <Sidebar />}
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to='/login' />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
@@ -55,7 +57,7 @@ function App() {
         <Route path="/notifications" element={authUser ? <NotificationPage /> : <Navigate to='/login' />} />
         <Route path="/profile/:username" element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
       </Routes >
-      <RightPanel />
+      {!isPanel && <RightPanel />}
       <Toaster />
     </div>
   );
