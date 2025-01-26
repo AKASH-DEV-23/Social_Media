@@ -9,7 +9,7 @@ A modern social media platform with user-friendly features, real-time updates, a
 - **Backend**: Node.js, Express  
 - **Database**: MongoDB  
 - **Styling**: Tailwind CSS  
-- 🔥 **Data Fetching**: React Query  
+- **Data Fetching**: React Query  
 
 ---
 
